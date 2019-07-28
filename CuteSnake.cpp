@@ -43,8 +43,6 @@ void UIGameSettings()
 	}
 }
 
-//int Sizeof
-
 int UIMainMenu()
 {
 	const char* mainMenuStr[] = { "开始游戏", "游戏设置", "退出游戏" };
