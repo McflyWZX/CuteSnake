@@ -17,7 +17,7 @@ int UIMainMenu();
 typedef struct {
 	int x, y;
 } Vector2;
-
+//Woshizhuzhu
 Vector2 mapSize = { 32, 16 };
 char direction[2][4] = { {0, 1, 0, -1}, {1, 0, -1, 0} };
 
