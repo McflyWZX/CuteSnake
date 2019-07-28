@@ -7,6 +7,10 @@
 #include <time.h>
 #include <windows.h>
 
+typedef struct {
+	int x, y;
+} Vector2;
+
 void cursorGoto(int x, int y);//定位光标位置到指定坐标
 void HideCursor();//隐藏光标
 void printIn(int x, int y, const char* c);//控制台在指定位置输出
@@ -14,9 +18,6 @@ int UIMenu(int numLines, const char** pageStrings);//菜单库
 int startGame(Vector2 mapSize);
 int UIMainMenu();
 
-typedef struct {
-	int x, y;
-} Vector2;
 //Woshizhuzhu
 Vector2 mapSize = { 32, 16 };
 char direction[2][4] = { {0, 1, 0, -1}, {1, 0, -1, 0} };
