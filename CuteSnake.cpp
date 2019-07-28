@@ -11,11 +11,14 @@ void cursorGoto(int x, int y);//定位光标位置到指定坐标
 void HideCursor();//隐藏光标
 void printIn(int x, int y, const char* c);//控制台在指定位置输出
 int UIMenu(int numLines, const char** pageStrings);//菜单库
-int startGame(int mapWidth, int mapHeigh);
+int startGame(Vector2 mapSize);
 int UIMainMenu();
 
+typedef struct {
+	int x, y;
+} Vector2;
 
-int mapWidth = 32, mapHeigh = 16;
+Vector2 mapSize = { 32, 16 };
 char direction[2][4] = { {0, 1, 0, -1}, {1, 0, -1, 0} };
 
 int main()
@@ -53,7 +56,7 @@ int UIMainMenu()
 	case 0:
 
 	start:
-		score = startGame(mapWidth, mapHeigh);
+		score = startGame(mapSize);
 		char scoreInfo[20];
 		sprintf_s(scoreInfo, "你的得分是: %d", score);
 		while (alt)
@@ -86,27 +89,27 @@ int UIMainMenu()
 	return 1;
 }
 
-int startGame(int mapWidth, int mapHeigh)
+int startGame(Vector2 mapSize)
 {
 	system("cls");
 	char gameOver = 0;
 	//随机数发生器初始化
 	srand((int)time(0));
 	//创建地图数组
-	char** map = new char* [mapHeigh];
-	int** snakeMap = new int* [mapHeigh];
-	for (int i = 0; i < mapHeigh; i++)
+	char** map = new char* [mapSize.y];
+	int** snakeMap = new int* [mapSize.y];
+	for (int i = 0; i < mapSize.y; i++)
 	{
-		map[i] = new char[mapWidth];
-		snakeMap[i] = new int[mapWidth];
+		map[i] = new char[mapSize.x];
+		snakeMap[i] = new int[mapSize.x];
 	}
 
 	//绘制地图内容
-	for (int i = 0; i < mapHeigh; i++)
+	for (int i = 0; i < mapSize.y; i++)
 	{
-		for (int j = 0; j < mapWidth; j++)
+		for (int j = 0; j < mapSize.x; j++)
 		{
-			if (i == 0 || j == 0 || i == mapHeigh - 1 || j == mapWidth - 1)
+			if (i == 0 || j == 0 || i == mapSize.y - 1 || j == mapSize.x - 1)
 			{
 				map[i][j] = '#';
 			}
@@ -163,13 +166,13 @@ int startGame(int mapWidth, int mapHeigh)
 			foodT = 0;
 
 			int foodX, foodY;
-			foodX = rand() % (mapWidth - 2) + 1;
-			foodY = rand() % (mapHeigh - 2) + 1;
+			foodX = rand() % (mapSize.x - 2) + 1;
+			foodY = rand() % (mapSize.y - 2) + 1;
 			//如果当前随机位置上面已经有东西,就再生成一个随机位置
 			while (map[foodY][foodX] != ' ')
 			{
-				foodX = rand() % (mapWidth - 2) + 1;
-				foodY = rand() % (mapHeigh - 2) + 1;
+				foodX = rand() % (mapSize.x - 2) + 1;
+				foodY = rand() % (mapSize.y - 2) + 1;
 			}
 			map[foodY][foodX] = '*';
 			printIn(foodX, foodY, "*");
