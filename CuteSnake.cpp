@@ -30,7 +30,6 @@ int main()
 	HideCursor();
 	PlaySound(L"music\\Tears In Pink Rain.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 	while (UIMainMenu());
-	//PlaySound(L"music\\Tears In Pink Rain.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 }
 
 void UIGameSettings()
@@ -50,7 +49,7 @@ void UIGameSettings()
 		break;
 	}
 }
-//PlaySound(NULL, NULL, SND_FILENAME);
+
 int UIMainMenu()
 {
 	
