@@ -6,6 +6,9 @@
 #include <limits.h>
 #include <time.h>
 #include <windows.h>
+#include <mmsystem.h>
+#pragma comment(lib,"winmm.lib")
+
 
 typedef struct {
 	int x, y;
@@ -25,8 +28,9 @@ char direction[2][4] = { {0, 1, 0, -1}, {1, 0, -1, 0} };
 int main()
 {
 	HideCursor();
+	PlaySound(L"music\\Tears In Pink Rain.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 	while (UIMainMenu());
-
+	//PlaySound(L"music\\Tears In Pink Rain.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 }
 
 void UIGameSettings()
@@ -46,9 +50,10 @@ void UIGameSettings()
 		break;
 	}
 }
-
+//PlaySound(NULL, NULL, SND_FILENAME);
 int UIMainMenu()
 {
+	
 	const char* mainMenuStr[] = { "开始游戏", "游戏设置", "退出游戏" };
 	int alt = 1;
 	int score;
@@ -57,12 +62,15 @@ int UIMainMenu()
 	case 0:
 
 	start:
+		
 		score = startGame(mapSize);
+		PlaySound(L"music\\Tears In Pink Rain.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 		char scoreInfo[20];
 		sprintf_s(scoreInfo, "你的得分是: %d", score);
+		
 		while (alt)
 		{
-
+			
 			const char* gameOverStr[] = { scoreInfo,"重新开始","返回菜单" };
 			switch (UIMenu(3, gameOverStr))
 			{
@@ -92,6 +100,7 @@ int UIMainMenu()
 
 int startGame(Vector2 mapSize)
 {
+	PlaySound(L"music\\hahaha.wav", NULL, SND_FILENAME | SND_ASYNC | SND_LOOP);
 	system("cls");
 	char gameOver = 0;
 	//随机数发生器初始化
@@ -160,6 +169,12 @@ int startGame(Vector2 mapSize)
 			velocityHeadX = 0;
 			velocityHeadY = 1;
 		}
+		else if (GetAsyncKeyState('P') && 0x8000)
+		{
+			cursorGoto(2, mapSize.y + 1);
+			system("pause");
+			printIn(2, mapSize.y + 1, "                                                     ");
+		}
 
 		//每九帧生成一个食物
 		if (foodT++ == 9)
@@ -212,6 +227,7 @@ int startGame(Vector2 mapSize)
 		//当当前时间-起始时间 < 300ms时在此等待,也就是达到了每300ms才更新一次画面的效果
 		while ((clock() - start) * 1000 / CLOCKS_PER_SEC < 300);
 	}
+	PlaySound(NULL, NULL, SND_FILENAME);
 	return score;
 }
 
